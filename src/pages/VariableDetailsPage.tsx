@@ -2,7 +2,11 @@ import { Link, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { useEffect, useMemo, useState } from "react";
 import type { VehicleVariable } from "../types/api";
-import { getVehicalesList } from "../api/nhtsa";
+import { getCachedVehicleVariables } from "../utils/vehicleVariables";
+
+function stripHTML(html: string) {
+  return html.replace(/<[^>]*>/g, "");
+}
 
 export default function VariableDetailsPage() {
   const { variableId } = useParams();
@@ -13,10 +17,10 @@ export default function VariableDetailsPage() {
   useEffect(() => {
     let active = true;
 
-    getVehicalesList()
-      .then((data) => {
+    getCachedVehicleVariables()
+      .then((result) => {
         if (!active) return;
-        setVariables(data.Results || []);
+        setVariables(result);
       })
       .catch(() => {
         if (!active) return;
@@ -36,10 +40,6 @@ export default function VariableDetailsPage() {
     () => variables.find((item) => String(item.ID) === String(variableId)),
     [variableId, variables],
   );
-  
-  function stripHTML (html: string){
-    return html.replace(/<[^>]*>/g, "");
-  }
 
   return (
     <Layout>
@@ -55,7 +55,11 @@ export default function VariableDetailsPage() {
         {variable && (
           <div className="variable">
             <h3>{variable.Name}</h3>
-            <p>{variable.Description ? stripHTML(variable.Description): "There is no description available."}</p>
+            <p>
+              {variable.Description
+                ? stripHTML(variable.Description)
+                : "There is no description available."}
+            </p>
             <p>Data type: {variable.DataType || "N/A"}</p>
             <p>Group name: {variable.GroupName || "N/A"}</p>
           </div>
