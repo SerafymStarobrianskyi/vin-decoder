@@ -5,7 +5,7 @@ The app validates VIN input, shows decoded vehicle data, stores the last 3 reque
 
 ## Live Demo
 Add your deployed link here  
-Example: 
+https://vin-decoder-gilt.vercel.app/ 
 
 ## Tech Stack
 - React
