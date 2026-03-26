@@ -4,7 +4,6 @@ A single-page React application for decoding vehicle VIN codes using the public 
 The app validates VIN input, shows decoded vehicle data, stores the last 3 requests in localStorage, and provides pages with all vehicle variables and detailed variable descriptions.
 
 ## Live Demo
-Add your deployed link here  
 https://vin-decoder-gilt.vercel.app/ 
 
 ## Tech Stack
